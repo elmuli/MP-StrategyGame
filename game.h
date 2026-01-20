@@ -35,6 +35,7 @@ struct __attribute__((packed))GameState{
     uint8_t isReady;
     uint8_t waitForServer;
     struct Unit units[3];
+    struct Unit *selectedUnit;
 };
 
 #pragma pack(pop)

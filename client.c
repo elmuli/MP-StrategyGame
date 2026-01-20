@@ -17,13 +17,6 @@ struct GameState gameState;
 SDL_Texture *tileTextures[3];
 SDL_FRect tileRect;
 
-void GetPlayerInput(SDL_Event *event, struct GameState *gameState, const bool *keys){
-    SDL_PumpEvents();
-
-    if (keys[SDL_SCANCODE_SPACE]) {
-        gameState->isReady = 1;
-    }
-}
 
 void LoadMapTextures(SDL_Renderer *renderer){ 
     SDL_Surface *Surface = SDL_LoadBMP("assets/GrassTile.bmp"); 
@@ -95,6 +88,45 @@ void DrawUnits(struct GameState *gameState, SDL_Renderer *renderer){
                 break;
             }
         }
+    }
+}
+
+
+int SelectUnit(struct GameState *gameState){
+    float mouseX, mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    for (int i=0;i<195;i++){
+        if(gameState->unitMap.tileType[i] > 0){
+            float TileY = i/gameState->tileMap.tilesAcross*(float)gameState->tileMap.tilePxY;
+            float TileX = i%gameState->tileMap.tilesAcross*(float)gameState->tileMap.tilePxX;
+
+            if(
+                mouseX > TileX 
+                && mouseX < TileX+gameState->tileMap.tilePxX 
+                && mouseY > TileY 
+                && mouseY < TileY+gameState->tileMap.tilePxY)
+            {
+                for (int k=0;k<3;k++){
+                    if(gameState->units[k].posOnGrid == i){
+                        gameState->selectedUnit = *gameState->units[k];
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+int MoveUnit(struct GameState *gameState){
+
+}
+
+void GetPlayerInput(SDL_Event *event, struct GameState *gameState, const bool *keys){
+    SDL_PumpEvents();
+
+    if (keys[SDL_SCANCODE_SPACE]) {
+        gameState->isReady = 1;
     }
 }
 
