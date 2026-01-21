@@ -119,8 +119,6 @@ int SelectUnit(struct GameState *gameState){
 }
 
 int MoveUnit(struct GameState *gameState){
-    if (gameState->selectedUnit == nullptr) {
-    }
     float mouseX, mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
     //int tileX = mouseX / gameState->tileMap.tilePxX;
