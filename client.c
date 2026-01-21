@@ -97,14 +97,14 @@ int SelectUnit(struct GameState *gameState){
     SDL_GetMouseState(&mouseX, &mouseY);
     for (int i=0;i<195;i++){
         if(gameState->unitMap.tileType[i] > 0){
-            float TileY = i/gameState->tileMap.tilesAcross*(float)gameState->tileMap.tilePxY;
-            float TileX = i%gameState->tileMap.tilesAcross*(float)gameState->tileMap.tilePxX;
+            float tileY = i/gameState->tileMap.tilesAcross*(float)gameState->tileMap.tilePxY;
+            float tileX = i%gameState->tileMap.tilesAcross*(float)gameState->tileMap.tilePxX;
 
             if(
-                mouseX > TileX 
-                && mouseX < TileX+gameState->tileMap.tilePxX 
-                && mouseY > TileY 
-                && mouseY < TileY+gameState->tileMap.tilePxY)
+                mouseX > tileX 
+                && mouseX < tileX+gameState->tileMap.tilePxX 
+                && mouseY > tileY 
+                && mouseY < tileY+gameState->tileMap.tilePxY)
             {
                 for (int k=0;k<3;k++){
                     if(gameState->units[k].posOnGrid == i){
@@ -119,7 +119,12 @@ int SelectUnit(struct GameState *gameState){
 }
 
 int MoveUnit(struct GameState *gameState){
+    int mouseX, mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    int tileX = mouseX / gameState->tileMap.tilePxX;
+    int tileY = mouseY / gameState->tileMap.tilePxY;
 
+    int newIndex = TileY * gameState->tileMap.tilesAcross + gameState->tileMap.tilePxX;
 }
 
 void GetPlayerInput(SDL_Event *event, struct GameState *gameState, const bool *keys){
